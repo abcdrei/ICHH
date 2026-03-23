@@ -2,149 +2,159 @@
 <html>
 <head>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f9;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .header {
-            background-color: #00143c;
-            padding: 30px;
-            text-align: center;
-        }
-
-            .header h1 {
-                color: #ffffff;
+            body {
+                font-family: 'Segoe UI', Arial, sans-serif;
                 margin: 0;
-                font-size: 28px;
-                letter-spacing: 1px;
+                padding: 0;
+                background-color: #f4f7f9;
             }
 
-        .accent-bar {
-            height: 4px;
-            background: linear-gradient(90deg, #cfdfff, #a7bde8);
-        }
+            .container {
+                max-width: 700px;
+                margin: 20px auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
 
-        .content {
-            padding: 40px 30px;
-            color: #333333;
-            line-height: 1.6;
-        }
+            .header {
+                background-color: #00143c;
+                padding: 30px;
+                text-align: center;
+            }
 
-            .content h2 {
+                .header h1 {
+                    color: #ffffff;
+                    margin: 0;
+                    font-size: 28px;
+                    letter-spacing: 1px;
+                }
+
+            .accent-bar {
+                height: 4px;
+                background: linear-gradient(90deg, #cfdfff, #a7bde8);
+            }
+
+            .content {
+                padding: 40px 30px;
+                color: #333333;
+                line-height: 1.6;
+            }
+
+                .content h2 {
+                    color: #1a2b3c;
+                    font-size: 18px;
+                    margin-top: 0;
+                    border-bottom: 1px solid #eeeeee;
+                    padding-bottom: 10px;
+                }
+
+            /* Email-safe table layout for the name row */
+            .name-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
+            .name-cell {
+                width: 50%;
+                vertical-align: top;
+            }
+
+            .field-group {
+                margin-bottom: 20px;
+            }
+
+            .label {
+                font-weight: bold;
                 color: #1a2b3c;
-                font-size: 18px;
-                margin-top: 0;
-                border-bottom: 1px solid #eeeeee;
-                padding-bottom: 10px;
+                font-size: 12px;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 4px;
             }
 
-        .field-group {
-            margin-bottom: 20px;
-        }
+            .value {
+                background-color: #f9f9f9;
+                padding: 12px;
+                border-radius: 4px;
+                border-left: 4.5px solid #00143c;
+            }
 
-        .label {
-            font-weight: bold;
-            color: #1a2b3c;
-            font-size: 12px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 4px;
-        }
+            .footer {
+                background-color: #f4f7f9;
+                padding: 20px;
+                text-align: center;
+                color: #777777;
+                font-size: 12px;
+            }
 
-        .value {
-            background-color: #f9f9f9;
-            padding: 12px;
-            border-radius: 4px;
-            border-left: 4.5px solid #00143c;
-        }
-
-        .footer {
-            background-color: #f4f7f9;
-            padding: 20px;
-            text-align: center;
-            color: #777777;
-            font-size: 12px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: #00143c;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+            .btn {
+                display: inline-block;
+                padding: 12px 30px;
+                background-color: #00143c;
+                color: #ffffff;
+                text-decoration: none;
+                border-radius: 12px;
+                font-weight: bold;
+                margin-top: 20px;
+            }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            @* <img src="/images/logo/logo-ic-light.png"> *@
             <h1>Intuitive Care Job Application</h1>
         </div>
         <div class="accent-bar"></div>
         <div class="content">
             <h2>New Career Form Submission</h2>
-            <p>You have received a new application from the website career form. Details are provided below:</p>
-            <div class="field-group">
-                <span class="label">Applicant's Name</span>
-                <div class="value">@FirstName</div>
-            </div>
-            <div class="field-group">
-                <span class="label">Applicant's Last Name</span>
-                <div class="value">@LastName</div>
-            </div>
+
+            <table class="name-table">
+                <tr>
+                    <td class="name-cell" style="padding-right: 10px;">
+                        <span class="label">First Name</span>
+                        <div class="value">@FirstName</div>
+                    </td>
+                    <td class="name-cell" style="padding-left: 10px;">
+                        <span class="label">Last Name</span>
+                        <div class="value">@LastName</div>
+                    </td>
+                </tr>
+            </table>
+
             <div class="field-group">
                 <span class="label">Date of Birth</span>
                 <div class="value">@DateOfBirth</div>
             </div>
+
             <div class="field-group">
                 <span class="label">Email Address</span>
                 <div class="value">@Email</div>
             </div>
+
             <div class="field-group">
                 <span class="label">Phone Number</span>
                 <div class="value">@Phone</div>
             </div>
+
             <div class="field-group">
                 <span class="label">Address</span>
-                <div class="value">@Address</div>
+                <div class="value">@((MarkupString)CombinedAddressHtml)</div>
             </div>
-            <div class="field-group">
-                <span class="label">City</span>
-                <div class="value">@City</div>
-            </div>
-            <div class="field-group">
-                <span class="label">State</span>
-                <div class="value">@State</div>
-            </div>
-            <div class="field-group">
-                <span class="label">Zip Code</span>
-                <div class="value">@ZipCode</div>
-            </div>
+
             <div class="field-group">
                 <span class="label">Position Desired</span>
                 <div class="value">@PositionDesired</div>
             </div>
+
             <div class="field-group">
                 <span class="label">Comments</span>
                 <div class="value">@Comments</div>
             </div>
+
             <a href="mailto:@Email" class="btn" style="color: #ffffff">Reply to Application</a>
         </div>
 
@@ -160,12 +170,42 @@
     [Parameter] public string FirstName { get; set; } = string.Empty;
     [Parameter] public string LastName { get; set; } = string.Empty;
     [Parameter] public DateOnly DateOfBirth { get; set; }
-    [Parameter] public string Email { get; set; } = string.Empty;
+    [Parameter] public string Email { get; set; } = string.Empty; 
     [Parameter] public string Phone { get; set; } = string.Empty;
-    [Parameter] public string Address { get; set; } = string.Empty;
+    [Parameter] public string Address { get; set; } = string.Empty; 
     [Parameter] public string City { get; set; } = string.Empty;
     [Parameter] public string State { get; set; } = string.Empty;
     [Parameter] public string ZipCode { get; set; } = string.Empty;
     [Parameter] public string PositionDesired { get; set; } = string.Empty;
     [Parameter] public string Comments { get; set; } = string.Empty;
+
+    private string CombinedAddressHtml
+    {
+        get
+        {
+            var street = string.IsNullOrWhiteSpace(Address) ? null : Address.Trim();
+    var city = string.IsNullOrWhiteSpace(City) ? null : City.Trim();
+    var state = string.IsNullOrWhiteSpace(State) ? null : State.Trim();
+    var zip = string.IsNullOrWhiteSpace(ZipCode) ? null : ZipCode.Trim();
+
+    string cityStateZip = null;
+            if (!string.IsNullOrEmpty(city) || !string.IsNullOrEmpty(state) || !string.IsNullOrEmpty(zip))
+            {
+                if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state))
+                {
+                    cityStateZip = city + ", " + string.Join(" ", new[] { state, zip }.Where(s => !string.IsNullOrEmpty(s)));
+}
+                else
+{
+    cityStateZip = string.Join(" ", new[] { city, state, zip }.Where(s => !string.IsNullOrEmpty(s)));
+                }
+            }
+
+            var parts = new List<string>();
+if (!string.IsNullOrEmpty(street)) parts.Add(street);
+if (!string.IsNullOrEmpty(cityStateZip)) parts.Add(cityStateZip);
+
+return parts.Count > 0 ? string.Join("<br/>", parts) : string.Empty;
+        }
+    }
 }
