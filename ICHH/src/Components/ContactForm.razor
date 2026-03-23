@@ -1,0 +1,110 @@
+﻿@if (ShowSuccessModal)
+{
+	<div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content border-0 shadow-lg rounded-4">
+				<div class="modal-body text-center p-5">
+					<div class="mb-3">
+						<i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+					</div>
+					<h5 class="fw-bold mb-2">Message Sent!</h5>
+					<p class="text-muted mb-4">Your message has been sent successfully!</p>
+					<a href="/contact" class="btn btn-small btn-round-edge btn-dark-gray btn-box-shadow">
+						Close
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<style>
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+</style>
+
+<EditForm id="contact-form" class="contact-form-style-03" Model="FormInput" OnValidSubmit="Submit" FormName="ContactForm">
+
+	<DataAnnotationsValidator />
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Enter Your Name*</label>
+			<div class="position-relative form-group mb-25px">
+				<span class="form-icon"><i class="bi bi-emoji-smile"></i></span>
+                <InputText class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" @bind-Value="FormInput.Name" placeholder="What's your good name?" />
+				<ValidationMessage For="() => FormInput.Name" class="text-danger fs-13" />
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Email Address*</label>
+			<div class="position-relative form-group mb-25px">
+				<span class="form-icon"><i class="bi bi-envelope"></i></span>
+                <InputText class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" @bind-Value="FormInput.Email" placeholder="Enter your email address" />
+				<ValidationMessage For="() => FormInput.Email" class="text-danger fs-13" />
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Phone Number</label>
+			<div class="position-relative form-group mb-25px">
+				<span class="form-icon"><i class="bi bi-telephone"></i></span>
+                <InputText type="number" maxlength="15" oninput="this.value = this.value.slice(0, 15)" class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" @bind-Value="FormInput.Phone" placeholder="Enter your phone number" />
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Subject</label>
+			<div class="position-relative form-group mb-25px">
+				<span class="form-icon"><i class="bi bi-journals"></i></span>
+                <InputText class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" @bind-Value="FormInput.Subject" placeholder="How can we help you?" />
+			</div>
+		</div>
+
+		<div class="col-12 mb-4">
+			<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Your Message</label>
+			<div class="position-relative form-group form-textarea mb-0">
+                <InputTextArea class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control" rows="4" @bind-Value="FormInput.Message" placeholder="Your message here" />
+				<ValidationMessage For="() => FormInput.Message" class="text-danger fs-13" />
+				<span class="form-icon"><i class="bi bi-chat-square-dots"></i></span>
+			</div>
+		</div>
+
+		<div class="col-6 mb-3">
+            <div id="recaptcha-container"></div>
+            @if (CaptchaError)
+            {
+                <span class="text-danger fs-13 d-block mt-1">Please complete the CAPTCHA to continue.</span>
+            }
+        </div>
+
+		<div class="col-xxl-6 col-lg-5 col-md-4 text-center text-md-end sm-mt-25px">
+			@if (!string.IsNullOrEmpty(StatusMessage) && !IsSuccess)
+			{
+				<div class="form-results mt-20px text-danger">
+					@StatusMessage
+				</div>
+			}
+			<button class="btn btn-medium btn-dark-gray btn-box-shadow btn-round-edge text-transform-none primary-font mt-3"
+					type="submit" disabled="@IsSubmitting">
+				@(IsSubmitting ? "Sending..." : "Send message")
+			</button>
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<p class="mb-0 fs-14 lh-24 text-align-center text-md-start">We are committed to protecting your privacy.</p>
+		</div>
+		<div class="d-flex justify-content-center">
+			<p class="mb-0 fs-14 lh-24 text-align-center text-md-start">We will never collect information about you without your explicit consent.</p>
+		</div>
+		
+		@* <div class="col-12">
+			<div class="form-results mt-20px d-none"></div>
+		</div> *@
+	</div>
+
+</EditForm>

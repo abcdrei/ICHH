@@ -1,0 +1,40 @@
+:root {
+	--alt-font: "Inter", sans-serif;
+	--primary-font: "Inter", sans-serif;
+	--base-color: #D8E9E4;
+	--dark-gray: #00143C;
+	--medium-gray: #343844;
+	--body-color: #383e53;
+	--accent: rgb(255, 81, 0);
+}
+
+$base-color: #D8E9E4;
+$dark-gray: #00143C;
+$medium-gray: #383e53;
+$body-color: #383e53;
+
+/* --------------------
+	background-color
+-------------------- */
+.bg-ic-light-green 		{ background-color: #D8E9E4; }
+.bg-ic-light-red 			{ background-color: #f8e3e3; }
+.bg-ic-light-purple 	{ background-color: #eae3f8; }
+.bg-ic-light-orange 	{ background-color: #fff9ee; }
+.bg-ic-light-blue 		{ background-color: #E3EEF8; }
+.bg-ic-light-blue2 		{ background-color: #bbc9d5; }
+.bg-ic-blue2 					{ background-color: #2f4c77; }
+
+.w-mincontent { width: min-content; }
+.w-maxcontent { width: max-content; }
+
+.text-accent { color: var(--accent) }
+.background-accent { background-color: var(--accent) }
+.border-color-accent { border-color: var(--accent) }
+
+.bg-ic-light-green2 {
+	background-color: darken($base-color, 5%);
+}
+
+.bg-dark-gray2 {
+	background-color: rgba($dark-gray, 0.7);
+}

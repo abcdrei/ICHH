@@ -1,0 +1,201 @@
+﻿@page "/coverage-area"
+
+<PageTitle>Coverage Area</PageTitle>
+<Header />
+
+<!-- start section -->
+<section class="p-0">
+	<div class="container-fluid p-0">
+		<div class="row g-0">
+			<div class="col-12">
+				<!-- start stack card -->
+				<div class="stack-card cards" data-scale="false" data-top-space="0" data-top-padding="0">
+					<!-- hero start -->
+					<div class="hero stack-item" data-index="0">
+						<div class="dfw-map-wrapper">
+
+							<!-- COUNTY LIST -->
+							<div class="dfw-county-list border rounded-3 box-shadow  text-dark-gray">
+								<h2>Dallas–Plano–Irving</h2>
+								<ul>
+									<li data-county="Collin">Collin County</li>
+									<li data-county="Dallas">Dallas County</li>
+									<li data-county="Denton">Denton County</li>
+									<li data-county="Grayson">Grayson County</li>
+									<li data-county="Ellis">Ellis County</li>
+									<li data-county="Hunt">Hunt County</li>
+									<li data-county="Kaufman">Kaufman County</li>
+									<li data-county="Rockwall">Rockwall County</li>
+								</ul>
+								<hr>
+								<h2>Fort Worth–Arlington</h2>
+								<ul>
+									<li data-county="Tarrant">Tarrant County</li>
+									<li data-county="Hood">Hood County</li>
+									<li data-county="Johnson">Johnson County</li>
+									<li data-county="Parker">Parker County</li>
+									<li data-county="Somervell">Somervell County</li>
+									<li data-county="Wise">Wise County</li>
+								</ul>
+							</div>
+
+							<!-- MAP -->
+							<div id="dfw-map" style="height: 100vh;"></div>
+
+						</div>
+					</div>
+					<!-- hero end -->
+					<!-- cta start -->
+					<div class="stack-item bg-ic-light-red border-top border-color-transparent-dark-very-light overflow-hidden  cover-background" data-index="99" style="background-image: url('images/bg-cta.webp')">
+						<div class="container">
+							<div class="row">
+								<div class="col-12 md-mb-4 mb-2">
+									<div class="pt-10 pb-10 xxl-p-7 cover-background position-relative overflow-hidden border-radius-18px xl-p-8" style="background-image: url('images/demo-recruitment-bg-03.webp')">
+										<div class="position-relative w-35 xl-w-50 lg-w-65 sm-w-70 xs-w-100 xs-mt-minus-40px">
+											<!-- <img class="mb-30px h-40px" src="images/logo/ic-logo-icon-dark.svg" alt=""> -->
+											<h3 class="fw-600 mb-1 text-dark-gray fs-40">We're here to help</h3>
+											<p class="w-90 xxl-w-100 mb-25px fs-18 fw-500">Reach out with questions about care, coverage, or next steps. Our team is ready to support you.</p>
+											<div class="d-flex flex-md-row flex-column gap-4 align-items-center">
+												<a href="/contact" class="btn p-10px rounded-pill ps-20px pe-20px fs-18 fw-700 btn-dark-gray d-table align-items-center justify-content-center h-40px w-maxcontent"
+												   style="white-space: nowrap;">
+													Let's Talk
+												</a>
+												<div class="d-flex flex-row gap-3 align-items-center justify-content-center">
+													<i class="feather icon-feather-phone-call icon-large text-dark-color"></i>
+													<div>
+														<p class="fs-26 fw-semibold text-dark-gray mb-0" style="white-space: nowrap;">(469) 927-7003</p>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- cta end -->
+					<Footer />
+				</div>
+				<!-- end stack card -->
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+	let map;
+	const countyLayers = {};
+	const countyMarkers = {};
+	let mapReady = false;
+
+	const DALLAS_GROUP = [
+		'Collin', 'Dallas', 'Denton', 'Grayson',
+		'Ellis', 'Hunt', 'Kaufman', 'Rockwall'
+	];
+
+	const FORT_WORTH_GROUP = [
+		'Tarrant', 'Hood', 'Johnson',
+		'Parker', 'Somervell', 'Wise'
+	];
+
+	const COLORS = {
+		dallas: '#6FCF97',
+		fortworth: '#2F80ED'
+	};
+
+	const pinIcon = L.icon({
+		iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+		iconSize: [25, 41],
+		iconAnchor: [12, 41]
+	});
+
+	function popupTemplate(county) {
+		const region = DALLAS_GROUP.includes(county)
+			? 'Dallas–Plano–Irving Area'
+			: 'Fort Worth–Arlington Area';
+
+		return `
+		<div class="map-popup">
+			<h4>${county} County</h4>
+			<p class="region">${region}</p>
+		</div>
+	`;
+	}
+
+	requestAnimationFrame(() => {
+
+		map = L.map('dfw-map', {
+			scrollWheelZoom: true,
+			minZoom: 6,
+			maxZoom: 12
+		}).setView([32.8, -97.0], 8);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; OpenStreetMap'
+		}).addTo(map);
+
+		fetch('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
+			.then(r => r.json())
+			.then(data => {
+
+				const allBounds = [];
+
+				L.geoJSON(data, {
+					filter: f => {
+						if (f.properties.STATE !== '48') return false;
+						const n = f.properties.NAME;
+						return DALLAS_GROUP.includes(n) || FORT_WORTH_GROUP.includes(n);
+					},
+					style: f => {
+						const isDallas = DALLAS_GROUP.includes(f.properties.NAME);
+						return {
+							color: isDallas ? COLORS.dallas : COLORS.fortworth,
+							fillColor: isDallas ? COLORS.dallas : COLORS.fortworth,
+							fillOpacity: 0.35,
+							weight: 1.5
+						};
+					},
+					onEachFeature: (f, layer) => {
+						const name = f.properties.NAME;
+						countyLayers[name] = layer;
+						allBounds.push(layer);
+
+						layer.on('click', () => zoomToCounty(name));
+
+						const center = layer.getBounds().getCenter();
+						countyMarkers[name] = L.marker(center, { icon: pinIcon })
+							.addTo(map)
+							.bindPopup(popupTemplate(name));
+					}
+				}).addTo(map);
+
+				setTimeout(() => {
+					map.invalidateSize(true);
+					map.fitBounds(L.featureGroup(allBounds).getBounds(), { padding: [80, 80] });
+					mapReady = true;
+				}, 600);
+			});
+	});
+
+	function zoomToCounty(county) {
+		if (!mapReady || !countyLayers[county]) return;
+
+		map.flyToBounds(countyLayers[county].getBounds(), {
+			padding: [100, 100],
+			maxZoom: 10,
+			duration: 0.8
+		});
+
+		countyMarkers[county].openPopup();
+	}
+
+	document.querySelectorAll('.dfw-county-list li').forEach(li => {
+		li.addEventListener('click', () => zoomToCounty(li.dataset.county));
+	});
+</script>

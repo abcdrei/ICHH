@@ -1,0 +1,120 @@
+@use "variables";
+
+/* --------------------
+	Divider
+-------------------- */
+.divider-dotted {
+	border: 0;
+	border-bottom: 2px dotted var(--medium-gray);
+}
+
+/* --------------------
+	Home Btn Selection
+-------------------- */
+.btn-hero-group {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: space-between;
+	@media(max-width:575px) {
+		flex-direction: column;
+	}
+}
+
+.btn-hero-selection {
+	padding: 1rem 1.7rem;
+	background-color: variables.$base-color;
+	color: variables.$dark-gray;
+	border: 2px solid variables.$base-color;
+	border-radius: 3rem;
+	font-size: 1.4rem;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+	white-space: nowrap;
+	max-width: 400px;
+	@media(max-width: 575px) {
+		max-width: 100%;
+		justify-content: center;
+	}
+
+	/* required for backdrop-filter */
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+
+	transition:
+	background-color 0.3s ease,
+	backdrop-filter 0.3s ease;
+
+	&.active,
+	&:active,
+	&:focus {
+		background-color: rgba(#fff, 0.5);
+		backdrop-filter: blur(12px);
+		border-color: rgba(variables.$dark-gray, .3);
+		color: variables.$dark-gray;
+	}
+
+	&:hover {
+		background-color: darken(variables.$base-color, 10%);
+		border-color: rgba(variables.$dark-gray, .5);
+		color: variables.$dark-gray;
+	}
+}
+
+/* --------------------
+	Tabs
+-------------------- */
+.tab-style-01 .nav-tabs .nav-link {
+	padding: 1.2rem 1.8rem;
+}
+
+.tab-style-01 .nav-tabs .nav-link.show,
+.tab-style-01 .nav-tabs .nav-link.active,
+.tab-style-01 .nav-tabs .nav-link:hover {
+	@media (max-width: 767px) {
+		border-radius: 3rem;
+	}
+}
+
+.tab-style-01 .nav-tabs>li.nav-item .nav-link {
+	@media (max-width: 767px) {
+		border-radius: 3rem !important;
+	}
+}
+
+/* --------------------
+	Services - index box
+-------------------- */
+
+.service-link {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+
+	min-height: 15rem;
+	padding: 2rem;
+	background-color: darken(variables.$base-color, 8%);
+	color: variables.$dark-gray;
+	border-radius: 15px;
+
+	@media (max-width: 575px) {
+		min-height: 20rem;
+	}
+
+	span:nth-of-type(1) {
+		font-weight: 600;
+		font-size: 1.4rem;
+		line-height: 1.3;
+
+		@media (max-width: 991px) {
+			font-size: 1.8rem;
+		}
+	}
+
+	&:hover {
+		background-color: darken(variables.$base-color, 20%);
+		color: variables.$dark-gray;
+	}
+}

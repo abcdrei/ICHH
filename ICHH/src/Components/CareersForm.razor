@@ -1,0 +1,324 @@
+﻿@if (ShowSuccessModal)
+{
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-body text-center p-5">
+                    <div class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Application Sent!</h5>
+                    <p class="text-muted mb-4">Your application has been submitted successfully!</p>
+                    <a href="/careers" class="btn btn-small btn-round-edge btn-dark-gray btn-box-shadow">
+                        Close
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<EditForm id="applicationForm" class="row" enctype="multipart/form-data" Model="FormInput" OnValidSubmit="Submit" FormName="CareersForm">
+	
+    <DataAnnotationsValidator />
+    <div class="col-12">
+        <hr class="divider-dotted">
+    </div>
+
+    <!-- Personal Information -->
+    <div class="col-12">
+        <h6 class="fs-16px fw-700 text-uppercase mb-10px">Personal Information</h6>
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">First Name <span class="text-red">*</span></label>
+        <InputText name="firstName" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.FirstName" />
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Last Name <span class="text-red">*</span></label>
+        <InputText name="lastName" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.LastName" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Date of Birth <span class="text-red">*</span></label>
+        <InputDate name="dateofbirth" class="form-control ps-15px pe-15px pt-10px pb-10px" @bind-Value="FormInput.DateOfBirth" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Email <span class="text-red">*</span></label>
+        <InputText name="email" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.Email" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Phone Number <span class="text-red">*</span></label>
+        <InputText id="phoneInput" name="phone" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.PhoneNumber" />
+        <div id="phoneValidationFeedback" class="fs-12px mt-2"></div>
+        <ValidationMessage For="@(() => FormInput.PhoneNumber)" class="d-block text-danger fs-13" />
+    </div>
+
+    <div class="col-12 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Address <span class="text-red">*</span></label>
+        <InputText name="address" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.Address" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">City <span class="text-red">*</span></label>
+        <InputText name="city" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.City" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">State <span class="text-red">*</span></label>
+        <InputText name="state" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.State" />
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Zip Code <span class="text-red">*</span></label>
+        <InputText id="zipCodeInput" name="zipcode" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.ZipCode" />
+        <div id="zipValidationFeedback" class="fs-12px mt-2"></div>
+        <ValidationMessage For="@(() => FormInput.ZipCode)" class="d-block text-danger fs-13" />
+    </div>
+
+    <div class="col-12 mb-2">
+        <hr class="divider-dotted">
+    </div>
+
+    <!-- Position Applied -->
+    <div class="col-12 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Position Desired <span class="text-red">*</span></label>
+        <InputText name="experience"
+                   class="form-control ps-15px pe-15px pt-10px pb-10px"
+                   disabled="@IsPositionDisabled"
+                   required
+                   @bind-Value="FormInput.PositionDesired"
+                   placeholder="" />
+        @* @if (IsPositionDisabled)
+        {
+            <small class="text-medium-gray d-block mt-5px">✓ Position auto-filled from job listing</small>
+        } *@
+    </div>
+
+    <div class="col-12 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Upload Resume <span class="text-red">*</span></label>
+        <div class="input-group">
+            <input type="file" class="form-control ps-15px pe-15px pt-10px pb-10px" id="resumeUpload" accept=".pdf,.doc,.docx" />
+        </div>
+        <div class="fs-12px text-medium-gray mt-5px">Accepted formats: PDF, DOC, DOCX</div>
+    </div>
+
+    <div class="col-12 mb-2">
+        <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Comments</label>
+        <InputTextArea name="comments" class="form-control ps-15px pe-15px pt-10px pb-10px" rows="5" @bind-Value="FormInput.Comments" placeholder="" />
+    </div>
+
+    <!-- Consent -->
+    <div class="col-12 mb-4">
+        <div class="form-check d-flex align-items-center gap-3">
+            <InputCheckbox class="form-check-input ps-10px pe-15px" style="margin-top:-1px;" id="consent" name="consent" @bind-Value="FormInput.Consent" required />
+            <label class="form-check-label fs-14px lh-14px text-dark-gray" for="consent">
+                I consent to the collection and processing of my personal data for recruitment purposes. <span class="text-red">*</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Captcha -->
+    <div class="col-6 mb-3">
+        <div id="recaptcha-container"></div>
+        @if (CaptchaError)
+        {
+            <span class="text-danger fs-13 d-block mt-1">Please complete the CAPTCHA to continue.</span>
+        }
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-12">
+        <button type="submit" class="btn btn-dark-gray btn-box-shadow btn-rounded fw-bold fs-16 py-3 px-5" disabled="@IsSubmitting">
+            @(IsSubmitting ? "Sending..." : "Submit Application")
+        </button>
+        @if (!string.IsNullOrWhiteSpace(StatusMessage) && !IsSuccess)
+        {
+            <div class="alert alert-danger mt-3 mb-0" role="alert">
+                @StatusMessage
+            </div>
+        }
+        <div id="formMessage"></div>
+    </div>
+
+    <script type="text/javascript" src="/js/careers-resume-upload.js"></script>
+
+    <script>
+        window.applyPhoneMask = (elementId) => {
+        const input = document.getElementById(elementId);
+        const feedbackDiv = document.getElementById('phoneValidationFeedback');
+
+        if (!input) return;
+
+        input.addEventListener('input', (e) => {
+        // Strip everything except numbers
+        let numbers = e.target.value.replace(/\D/g, '');
+
+        // Truncate to 10 digits
+        if (numbers.length > 10) numbers = numbers.substring(0, 10);
+
+        // Apply US Mask: (XXX) XXX-XXXX
+        let formatted = '';
+        if (numbers.length > 0) {
+        formatted = '(' + numbers.substring(0, 3);
+        if (numbers.length > 3) {
+        formatted += ') ' + numbers.substring(3, 6);
+        }
+        if (numbers.length > 6) {
+        formatted += '-' + numbers.substring(6, 10);
+        }
+        }
+        e.target.value = formatted;
+
+        // Real-time validation feedback
+        validatePhoneNumber(numbers, feedbackDiv, input);
+
+        // Manually trigger the Blazor binding update
+        input.dispatchEvent(new Event('change'));
+        });
+        };
+
+        // Phone validation function with real-time feedback
+        window.validatePhoneNumber = (digitsOnly, feedbackDiv, input) => {
+        if (!feedbackDiv || !input) return;
+
+        const number = digitsOnly.trim();
+
+        // Empty field
+        if (number.length === 0) {
+        feedbackDiv.innerHTML = '';
+        input.classList.remove('is-invalid', 'is-valid');
+        return;
+        }
+
+        // Not enough digits yet
+        if (number.length < 10) {
+        feedbackDiv.innerHTML = `<span class="text-warning">${number.length}/10 digits</span>`;
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        return;
+        }
+
+        // Check for invalid area codes (starting with 0 or 1)
+        if (number[0] === '0' || number[0] === '1') {
+        feedbackDiv.innerHTML = '<span class="text-danger">Invalid area code. Cannot start with 0 or 1</span>';
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        return;
+        }
+
+        // Valid phone number
+        if (number.length === 10) {
+        feedbackDiv.innerHTML = '<span class="text-success">Valid phone number</span>';
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        return;
+        }
+
+        // More than 10 digits (shouldn't happen with our logic, but just in case)
+        feedbackDiv.innerHTML = '<span class="text-danger">Too many digits</span>';
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        };
+
+        window.applyZipCodeMask = (elementId) => {
+        const input = document.getElementById(elementId);
+        const feedbackDiv = document.getElementById('zipValidationFeedback');
+
+        if (!input) return;
+
+        input.addEventListener('input', (e) => {
+        // Numbers only
+        let numbers = e.target.value.replace(/\D/g, '');
+
+        // Truncate to 9 digits
+        if (numbers.length > 9) numbers = numbers.substring(0, 9);
+
+        // Apply ZIP mask: 12345 or 12345-6789
+        let formatted = numbers;
+        if (numbers.length > 5) {
+        formatted = numbers.substring(0, 5) + '-' + numbers.substring(5, 9);
+        }
+        e.target.value = formatted;
+
+        // Real-time validation feedback
+        validateZipCode(numbers, feedbackDiv, input);
+
+        // Manually trigger the Blazor binding update
+        input.dispatchEvent(new Event('change'));
+        });
+        };
+
+        window.validateZipCode = (digitsOnly, feedbackDiv, input) => {
+        if (!feedbackDiv || !input) return;
+
+        const zip = digitsOnly.trim();
+
+        if (zip.length === 0) {
+        feedbackDiv.innerHTML = '';
+        input.classList.remove('is-invalid', 'is-valid');
+        return;
+        }
+
+        if (zip.length < 5) {
+        feedbackDiv.innerHTML = `<span class="text-warning">${zip.length}/5 digits</span>`;
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        return;
+        }
+
+        if (zip.length === 5) {
+        feedbackDiv.innerHTML = '<span class="text-success">Valid 5-digit ZIP code</span>';
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        return;
+        }
+
+        if (zip.length < 9) {
+        feedbackDiv.innerHTML = `<span class="text-warning">ZIP+4 in progress (${zip.length}/9 digits)</span>`;
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        return;
+        }
+
+        if (zip.length === 9) {
+        feedbackDiv.innerHTML = '<span class="text-success">Valid ZIP+4 code</span>';
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        return;
+        }
+
+        feedbackDiv.innerHTML = '<span class="text-danger">Too many digits</span>';
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        };
+
+        // Returns the job title based on URL query param `id` or `jobTitle`.
+        // Looks up `window.jobs` populated by /js/jobs-data.js.
+        window.getJobTitleFromQuery = () => {
+        try {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (id && window.jobs && Array.isArray(window.jobs)) {
+        // Compare as strings to handle numeric/string id types
+        const job = window.jobs.find(j => String(j.id) === String(id));
+        if (job && job.title) return job.title;
+        }
+
+        // Fallback: use jobTitle query param (encoded)
+        const jt = params.get('jobTitle');
+        if (jt) return decodeURIComponent(jt);
+
+        return null;
+        } catch (err) {
+        console.error("[getJobTitleFromQuery] error", err);
+        return null;
+        }
+        };
+
+    </script>
+
+</EditForm>

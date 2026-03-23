@@ -1,0 +1,84 @@
+﻿@page "/career-form"
+
+<SeoMeta Title="Apply Now | Join Intuitive Care Home Health & Hospice Team"
+		 Description=""
+		 Keywords=""
+		 SocialTitle=""
+		 SocialDescription=""
+		 SocialImage=""
+		 SocialUrl=""
+		 SocialType=""
+		 Canonical="" />
+
+<Header />
+
+<body class="text-contents" data-mobile-nav-style="classic">
+	<!-- start page title -->
+	<section class="cover-background pb-4" style="background-image: url('images/bg-careers.png'); margin-bottom:-2rem;">
+		<div class="container">
+			<div class="row mt-10">
+				<div class="col-xl-8 col-lg-8">
+					<div class="text-dark-gray">
+						<h2 class="fw-semibold mb-2">Join Our Team</h2>
+						<p class="fs-18 lh-28 fw-medium mb-0" id="jobTitleHeader">
+							Apply for this position and become part of our
+							caring team.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end page title -->
+	<!-- start section -->
+	<section class="bg-ic-light-blue position-relative pt-0 pb-70px" style="border-radius: 2rem 2rem 0 0;  margin-bottom:-2rem;">
+		<div class="container">
+			<div class="card-body">
+				<a href="/careers" class="btn btn-link mb-2 sm-mb-50px">
+					<i class="fa-solid fa-arrow-left me-7px"></i> Back
+					to Jobs
+				</a>
+
+				<!-- Job Info Card -->
+				<div class="p-30px bg-white bg-opacity-75 border-radius-15px mb-20px">
+					<h4 class="fs-24px fw-bold text-dark-gray mb-0" id="jobTitle"></h4>
+					<div class="fw-500 fs-18px mb-10px d-none" id="jobFacility"></div>
+					<hr class="divider-dotted">
+					<div class="d-flex flex-wrap gap-2" id="jobBadges"></div>
+				</div>
+
+				<!-- Application Form -->
+				<div class="p-40px bg-white border-radius-15px">
+					<h5 class="fs-22px fw-bold text-dark-gray mb-0">Application Form</h5>
+					<CareersForm @rendermode="InteractiveServer" />
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end section -->
+
+	<Footer />
+
+	<script type="text/javascript" src="js/jobs-data.js"></script>
+	<script type="text/javascript">
+		// Load job details from URL parameter (header card only; Position Desired is set in CareersForm from ?jobTitle=)
+		document.addEventListener("DOMContentLoaded", () => {
+		const jobs = window.jobs;
+		const params = new URLSearchParams(window.location.search);
+		const id = params.get("id");
+		const job = jobs.find(j => j.id == id);
+
+		if (job) {
+		document.getElementById("jobTitleHeader").textContent = `Apply for ${job.title}`;
+		document.getElementById("jobTitle").textContent = job.title;
+		document.getElementById("jobFacility").textContent = job.facility;
+		document.getElementById("jobBadges").innerHTML = `
+		<div class="badge rounded-pill pt-5px pb-5px ps-10px pe-10px fs-14px border border-2 border-color-dark-gray text-dark-gray">${job.payrate}</div>
+		<div class="badge rounded-pill pt-5px pb-5px ps-10px pe-10px fs-14px border border-2 border-color-dark-gray text-dark-gray">${job.county} - ${job.city}</div>
+		<div class="badge rounded-pill pt-5px pb-5px ps-10px pe-10px fs-14px border border-2 border-color-dark-gray text-dark-gray">${job.shift}</div>
+		<div class="badge rounded-pill pt-5px pb-5px ps-10px pe-10px fs-14px border border-2 border-color-dark-gray text-dark-gray">${job.status}</div>
+		`;
+		}
+		});
+	</script>
+</body>

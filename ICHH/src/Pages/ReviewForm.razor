@@ -1,0 +1,105 @@
+﻿@page "/review-form"
+
+<SeoMeta Title="Give Us a Review | Intuitive Care Home Health & Hospice Dallas TX"
+		 Description=""
+		 Keywords=""
+		 SocialTitle=""
+		 SocialDescription=""
+		 SocialImage=""
+		 SocialUrl=""
+		 SocialType=""
+		 Canonical="" />
+
+<Header />
+
+<!-- start section -->
+<section class="p-0">
+	<div class="container-fluid p-0">
+		<div class="row g-0">
+			<div class="col-12">
+				<!-- start stack card -->
+				<div class="stack-card cards" data-scale="false" data-top-space="0" data-top-padding="0">
+					<!-- hero start -->
+					<div class="hero stack-item border-top bg-ic-light-orange cover-background" data-index="0" style="background-image: url('images/bg-contact.webp')">
+						<div class="container position-relative pt-5 h-100 d-flex align-items-center">
+							<div class="sm-mt-50px">
+
+								<div class="row justify-content-center mb-2 sm-mb-3">
+									<div class="col-lg-6 text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+										<h3 class="text-dark-gray fw-700 ls-minus-1px">Give Us A Review</h3>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-xxl-6 col-xl-7 col-lg-11">
+										<form action="email-templates/contact-form.php" method="post" class="contact-form-style-03">
+											<div class="row justify-content-center" data-anime='{ "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+												<!-- Star Rating Widget (JS-driven, half-star supported) -->
+												<div class="col-12 mb-4">
+													<label class="form-label fw-600 text-dark-gray mb-2 d-block">Please rate your experience.*</label>
+													<div id="icStarWidget" style="display:flex;gap:4px;margin-top:6px;cursor:pointer;" aria-label="Star rating"></div>
+													<div id="icRatingText" class="mt-2"></div>
+													<input type="hidden" name="rating" id="icRatingVal" value="">
+												</div>
+
+												<div class="col-12 mb-4">
+													<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-0">Please tell us about your experience. *</label>
+													<div class="position-relative form-group form-textarea mb-0">
+														<textarea class="ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control" name="comment" placeholder="Your message here" rows="4"></textarea>
+														<span class="form-icon"><i class="bi bi-chat-square-dots"></i></span>
+													</div>
+												</div>
+												<div class="col-12 mb-4">
+													<label for="exampleInputEmail1" class="form-label fw-600 text-dark-gray mb-3">Would you like to be contacted about your experience?</label>
+													<div class="form-check fs-16px">
+														<input class="form-check-input h-15px w-15px p-0 border border-2 border-secondary" type="radio" name="radioDefault" id="radioDefault1">
+														<label class="form-check-label" for="radioDefault1">
+															Yes, By Email
+														</label>
+													</div>
+													<div class="form-check fs-16px">
+														<input class="form-check-input h-15px w-15px p-0 border border-2 border-secondary" type="radio" name="radioDefault" id="radioDefault2">
+														<label class="form-check-label" for="radioDefault2">
+															Yes, By Phone
+														</label>
+													</div>
+													<div class="form-check fs-16px">
+														<input class="form-check-input h-15px w-15px p-0 border border-2 border-secondary" type="radio" name="radioDefault" id="radioDefault3">
+														<label class="form-check-label" for="radioDefault3">
+															No, I do not want to be contacted.
+														</label>
+													</div>
+												</div>
+												<div class="col-xxl-8 col-lg-8 col-md-8">
+													<div class="form-check d-flex flex-row gap-3" style="margin-left:-3px;">
+														<input class="form-check-input p-0 border border-2 border-secondary" type="checkbox" value="" id="checkChecked" checked>
+														<label class="form-check-label fs-13px lh-18px" for="checkChecked">
+															By submitting your feedback, you grant the requestor the right to use your response for advertising or promotional purposes, including publishing or sharing the response with others.
+														</label>
+													</div>
+												</div>
+												<div class="col-xxl-4 col-lg-4 col-md-4 text-center text-md-end sm-mt-25px">
+													<input id="exampleInputEmail5" type="hidden" name="redirect" value="">
+													<button class="btn btn-medium btn-dark-gray btn-box-shadow btn-round-edge text-transform-none primary-font submit fs-16px lh-16px rounded-pill" type="submit">Send message</button>
+												</div>
+												<div class="col-12">
+													<div class="form-results mt-20px d-none"></div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- hero end -->
+				<Footer/>
+				</div>
+				<!-- end stack card -->
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->
+
+<script type="text/javascript" src="js/start-rating.js"></script>

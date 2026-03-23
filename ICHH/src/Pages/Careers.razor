@@ -1,0 +1,150 @@
+﻿@page "/careers"
+
+<SeoMeta Title="Careers | Join Intuitive Care Home Health & Hospice Team Dallas TX"
+		 Description=""
+		 Keywords=""
+		 SocialTitle=""
+		 SocialDescription=""
+		 SocialImage=""
+		 SocialUrl=""
+		 SocialType=""
+		 Canonical="" />
+
+<Header />
+
+<body class="text-contents" data-mobile-nav-style="classic">
+<!-- start page title -->
+<section class="cover-background pb-4" style="background-image: url('images/bg-careers.png'); margin-bottom:-2rem;">
+	<div class="container">
+		<div class="row mt-10">
+			<div class="col-xl-5 col-lg-6">
+				<div class="text-dark-gray">
+					<h2 class="fw-semibold">Grow With Our <br>Care Team</h2>
+					<p class="fs-20 lh-28 fw-medium">
+						At Intuitive Care Home Health & Hospice, we’re proud to deliver skilled, compassionate care where patients feel most comfortable — at home. Join our growing team
+						of clinicians and professionals dedicated to healing, dignity, and independence.
+					</p>
+				</div>
+			</div>
+			<div class="col-lg-4 offset-xl-3 offset-lg-2 text-lg-end text-start"></div>
+		</div>
+	</div>
+</section>
+<!-- end page title -->
+<!-- start section -->
+<section class="bg-ic-light-blue position-relative pt-0 pb-60px" style="border-radius: 2rem 2rem 0 0;  margin-bottom:-2rem;">
+	<div class="container">
+		<div class="career-lists">
+			<div class="career-filters">
+				<div class="filter-header gap-3 align-items-center">
+					<h5 class="mb-0 text-dark-gray fs-20 fw-bold">Job Filters</h5>
+					<button id="clearFilters" class="btn btn-dark-gray d-table d-lg-inline-block rounded-pill fs-12 lh-11 fw-700 pt-0px pb-0px ps-10px pe-10px text-capitalize" style="height:27px;">Clear Filters</button>
+				</div>
+				<hr class="divider-dotted my-0">
+				<div class="filter-selection bg-white bg-opacity-50 p-25px border-radius-15px">
+
+					<div>
+						<label class="form-label mb-0 fs-13px text-dark-gray text-uppercase fw-700">Position</label>
+						<select id="filter-position" multiple>
+							<option value="rn">Registered Nurse</option>
+							<option value="lvn">Licensed Vocational Nurse</option>
+							<option value="pt">Physical Therapist</option>
+							<option value="pta">Physical Therapy Assistant</option>
+							<option value="ot">Occupational Therapist</option>
+							<option value="cna">Home Health Aide</option>
+							<option value="cg">Caregiver</option>
+							<option value="cgn">Caregiver (No Experience)</option>
+							<option value="pca">Peronal Care Attendant</option>
+						</select>
+					</div>
+
+					<div>
+						<label class="form-label mb-0 fs-13px text-dark-gray text-uppercase fw-700">County</label>
+						<select id="filter-county" multiple>
+							<!-- Dallas–Plano–Irving -->
+							<optgroup class="fs-16px fw-bold" label="Dallas–Plano–Irving">
+								<option value="Collin">Collin</option>
+								<option value="Dallas">Dallas</option>
+								<option value="Denton">Denton</option>
+								<option value="Grayson">Grayson</option>
+								<option value="Ellis">Ellis</option>
+								<option value="Hunt">Hunt</option>
+								<option value="Kaufman">Kaufman</option>
+								<option value="Rockwall">Rockwall</option>
+							</optgroup>
+
+							<!-- Fort Worth–Arlington -->
+							<optgroup class="fs-16px fw-bold" label="Fort Worth–Arlington">
+								<option value="Tarrant">Tarrant</option>
+								<option value="Hood">Hood</option>
+								<option value="Johnson">Johnson</option>
+								<option value="Parker">Parker</option>
+								<option value="Somervell">Somervell</option>
+								<option value="Wise">Wise County</option>
+							</optgroup>
+						</select>
+					</div>
+
+					<div>
+						<label class="form-label mb-0 fs-13px text-dark-gray text-uppercase fw-700">City</label>
+						<select id="filter-city">
+							<!-- Valid county selection will populate this -->
+
+						</select>
+					</div>
+
+					<div>
+						<label class="form-label mb-0 fs-13px text-dark-gray text-uppercase fw-700">Shift</label>
+						<select id="filter-shift" multiple>
+							<option value="Day Job">Day Job</option>
+							<option value="Evening Job">Evening Job</option>
+							<option value="Night Job">Night Job</option>
+							<option value="Flex Time">Flex Time</option>
+							<option value="On Call">On Call</option>
+							<option value="Rotating">Rotating</option>
+						</select>
+					</div>
+
+					<div>
+						<label class="form-label mb-0 fs-13px text-dark-gray text-uppercase fw-700">Status</label>
+						<select id="filter-status">
+							<option value="">All</option>
+							<option value="Full-Time">Full-time</option>
+							<option value="Part-Time">Part-time</option>
+							<option value="PRN">PRN</option>
+							<option value="Contract">Contract</option>
+						</select>
+					</div>
+
+
+				</div>
+			</div>
+
+			<div class="career-items d-flex flex-column gap-3">
+				<div class="d-flex  align-items-center  gap-3">
+					<h5 class="mb-0 text-dark-gray fs-20 fw-bold"><span id="jobCount">(0)</span> Available Jobs</h5>
+
+				</div>
+
+				<hr class="divider-dotted my-0">
+
+				<div class="job-items" id="jobList"></div>
+
+				<!-- Pagination Controls -->
+				<div id="paginationControls" class="mt-4"></div>
+			</div>
+		</div>
+
+
+	</div>
+</section>
+<!-- end section -->
+
+<Footer/>
+
+	<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+	<script type="text/javascript" src="/js/careers.js"></script>
+	<script type="text/javascript" src="/js/jobs-data.js"></script>
+
+</body>
+

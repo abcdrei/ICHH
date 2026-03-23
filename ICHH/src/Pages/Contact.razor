@@ -1,0 +1,41 @@
+﻿@page "/contact"
+
+<PageTitle>Contact</PageTitle>
+<Header />
+
+<!-- start section -->
+<section class="p-0">
+	<div class="container-fluid p-0">
+		<div class="row g-0">
+			<div class="col-12">
+				<!-- start stack card -->
+				<div class="stack-card cards" data-scale="false" data-top-space="0" data-top-padding="0">
+					<!-- hero start -->
+					<div class="hero stack-item border-top bg-ic-light-blue cover-background" data-index="0" style="background-image: url('images/bg-contact.webp')">
+						<div class="container position-relative pt-5 d-flex align-items-center">
+							<div class="hero-content">
+
+								<div class="row justify-content-center mb-2 sm-mb-3">
+									<div class="col-lg-6 text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+										<span class="ps-25px pe-25px mb-15px text-uppercase text-base-color fs-14 lh-42px fw-700 border-radius-100px bg-gradient-quartz-light-transparent d-inline-block"></span>
+										<h3 class="text-dark-gray fw-700 ls-minus-1px">How can we help you?</h3>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-xxl-6 col-xl-7 col-lg-11">
+										<ContactForm @rendermode="InteractiveServer"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- hero end -->
+					
+				</div>
+				<Footer />
+				<!-- end stack card -->
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->

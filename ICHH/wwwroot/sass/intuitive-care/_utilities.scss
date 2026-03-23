@@ -1,0 +1,8 @@
+@for $i from 0 through 300 {
+  .fs-#{$i}px {
+    font-size: #{$i}px !important;
+  }
+  .lh-#{$i}px {
+    line-height: #{$i}px !important;
+  }
+}

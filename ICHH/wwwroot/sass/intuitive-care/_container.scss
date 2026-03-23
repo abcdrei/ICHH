@@ -1,0 +1,117 @@
+@use "../mixins/mixins" as *;
+@use "../variables" as *;
+
+/* ===================================
+  Content
+=================================== */
+.stack-card {
+	[class^="container"] {
+		@media (max-width: 575px) {
+			max-width: 95%;
+			padding-top: 6%;
+		}
+
+		@media (min-width: 576px) {
+			max-width: 96%;
+			padding-top: 3.3%;
+		}
+
+		@media (min-width: 768px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 992px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 1200px) {
+			max-width: 96%;
+			padding-top: 2.75%;
+		}
+
+		@media (min-width: 1400px) {
+			max-width: 1400px;
+		}
+
+		@media (min-width: 1800px) {
+			max-width: 1600px;
+		}
+	}
+}
+
+
+/* ===================================
+  Navbar
+=================================== */
+.header-top-bar,
+.navbar {
+	[class^="container"] {
+		padding: 0;
+
+		@media (max-width: 575px) {
+			max-width: 95%;
+		}
+
+		@media (min-width: 576px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 768px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 992px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 1200px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 1400px) {
+			max-width: 1400px;
+		}
+
+		@media (min-width: 1800px) {
+			max-width: 1600px;
+		}
+	}
+}
+
+/* ===================================
+  Content
+=================================== */
+.text-contents {
+	[class^="container"] {
+		@media (max-width: 575px) {
+			max-width: 95%;
+			padding-top: 6%;
+		}
+
+		@media (min-width: 576px) {
+			max-width: 96%;
+			padding-top: 3.3%;
+		}
+
+		@media (min-width: 768px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 992px) {
+			max-width: 96%;
+		}
+
+		@media (min-width: 1200px) {
+			max-width: 96%;
+			padding-top: 2.75%;
+		}
+
+		@media (min-width: 1400px) {
+			max-width: 1400px;
+		}
+
+		@media (min-width: 1800px) {
+			max-width: 1600px;
+		}
+	}
+}

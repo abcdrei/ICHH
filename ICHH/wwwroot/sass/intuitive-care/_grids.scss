@@ -1,0 +1,52 @@
+.dgFlow-auto	{
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.dgCol-1 {
+	gap:15px;
+	grid-template-columns: repeat(1, 1fr);
+}
+
+.dgCol-2 {
+	gap:10px;
+	grid-template-columns: repeat(2, 1fr);
+	@media (max-width: 768px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+.dgCol-3 {
+	gap:15px;
+	grid-template-columns: repeat(3, 1fr);
+	@media (max-width: 768px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 575px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+.dgCol-4 {
+	gap:15px;
+	grid-template-columns: repeat(4, 1fr);
+	@media (max-width: 768px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 575px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+.dgCol-5 {
+	gap:15px;
+	grid-template-columns: repeat(5, 1fr);
+	@media (max-width: 1024px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 575px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}

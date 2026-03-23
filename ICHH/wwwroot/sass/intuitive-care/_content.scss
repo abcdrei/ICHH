@@ -1,0 +1,36 @@
+/* --------------------
+	Stack Card
+-------------------- */
+.stack-card {
+	.stack-item {
+		border-radius: 2rem 2rem 0 0;
+		margin-bottom: -2rem;
+		padding-bottom: 4.5rem;
+
+		&:first-child {
+			border-radius: 0;
+			padding-bottom: 4.5rem;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+			padding-bottom: 1.5rem;
+		}
+	}
+}
+
+/* --------------------
+	Contact Map
+-------------------- */
+.map-responsive {
+	width: 100%;
+	height: 97vh;
+	/* REQUIRED */
+	position: absolute;
+	z-index: -1;
+}
+
+#leaflet-map {
+	width: 100%;
+	height: 100%;
+}
