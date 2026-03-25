@@ -33,21 +33,29 @@
     <div class="col-md-6 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">First Name <span class="text-red">*</span></label>
         <InputText name="firstName" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.FirstName" />
+        <ValidationMessage For="@(() => FormInput.FirstName)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-6 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Last Name <span class="text-red">*</span></label>
         <InputText name="lastName" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.LastName" />
+        <ValidationMessage For="@(() => FormInput.LastName)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Date of Birth <span class="text-red">*</span></label>
-        <InputDate name="dateofbirth" class="form-control ps-15px pe-15px pt-10px pb-10px" @bind-Value="FormInput.DateOfBirth" />
+        <InputDate name="dateofbirth"
+                   class="form-control ps-15px pe-15px pt-10px pb-10px"
+                   min="@MinDateOfBirth"
+                   max="@MaxDateOfBirth"
+                   @bind-Value="FormInput.DateOfBirth" />
+        <ValidationMessage For="@(() => FormInput.DateOfBirth)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Email <span class="text-red">*</span></label>
         <InputText name="email" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.Email" />
+        <ValidationMessage For="@(() => FormInput.Email)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
@@ -60,16 +68,19 @@
     <div class="col-12 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">Address <span class="text-red">*</span></label>
         <InputText name="address" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.Address" />
+        <ValidationMessage For="@(() => FormInput.Address)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">City <span class="text-red">*</span></label>
         <InputText name="city" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.City" />
+        <ValidationMessage For="@(() => FormInput.City)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
         <label class="form-label fs-14px fw-700 text-uppercase text-dark-gray mb-0">State <span class="text-red">*</span></label>
         <InputText name="state" class="form-control ps-15px pe-15px pt-10px pb-10px" required @bind-Value="FormInput.State" />
+        <ValidationMessage For="@(() => FormInput.State)" class="d-block text-danger fs-13" />
     </div>
 
     <div class="col-md-4 mb-2">
@@ -92,10 +103,6 @@
                    required
                    @bind-Value="FormInput.PositionDesired"
                    placeholder="" />
-        @* @if (IsPositionDisabled)
-        {
-            <small class="text-medium-gray d-block mt-5px">✓ Position auto-filled from job listing</small>
-        } *@
     </div>
 
     <div class="col-12 mb-2">
@@ -104,6 +111,10 @@
             <input type="file" class="form-control ps-15px pe-15px pt-10px pb-10px" id="resumeUpload" accept=".pdf,.doc,.docx" />
         </div>
         <div class="fs-12px text-medium-gray mt-5px">Accepted formats: PDF, DOC, DOCX</div>
+        @if (!string.IsNullOrWhiteSpace(ResumeValidationMessage))
+        {
+            <div class="text-danger fs-13">@ResumeValidationMessage</div>
+        }
     </div>
 
     <div class="col-12 mb-2">
@@ -119,6 +130,7 @@
                 I consent to the collection and processing of my personal data for recruitment purposes. <span class="text-red">*</span>
             </label>
         </div>
+        <ValidationMessage For="@(() => FormInput.Consent)" class="d-block text-danger fs-13" />
     </div>
 
     <!-- Captcha -->
@@ -315,6 +327,32 @@
         return null;
         } catch (err) {
         console.error("[getJobTitleFromQuery] error", err);
+        return null;
+        }
+        };
+
+        window.getAppliedJobDetailsFromQuery = () => {
+        try {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if (!id || !window.jobs || !Array.isArray(window.jobs)) {
+        return null;
+        }
+
+        const job = window.jobs.find(j => String(j.id) === String(id));
+        if (!job) {
+        return null;
+        }
+
+        return {
+        payRate: job.payrate ?? '',
+        county: job.county ?? '',
+        shift: job.shift ?? '',
+        status: job.status ?? ''
+        };
+        } catch (err) {
+        console.error("[getAppliedJobDetailsFromQuery] error", err);
         return null;
         }
         };

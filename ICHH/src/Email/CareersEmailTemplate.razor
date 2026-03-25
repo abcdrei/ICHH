@@ -50,7 +50,6 @@
                     padding-bottom: 10px;
                 }
 
-            /* Email-safe table layout for the name row */
             .name-table {
                 width: 100%;
                 border-collapse: collapse;
@@ -100,6 +99,13 @@
                 font-weight: bold;
                 margin-top: 20px;
             }
+
+            .job-details-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
     </style>
 </head>
 
@@ -111,6 +117,36 @@
         <div class="accent-bar"></div>
         <div class="content">
             <h2>New Career Form Submission</h2>
+
+            <div class="field-group">
+                <span class="label">Position Desired</span>
+                <div class="value">@PositionDesired</div>
+            </div>
+
+            <table class="job-details-table">
+                <tr>
+                    <td class="name-cell" style="padding-right: 10px;">
+                        <span class="label">Pay Rate</span>
+                        <div class="value">@PayRate</div>
+                    </td>
+                    <td class="name-cell" style="padding-left: 10px;">
+                        <span class="label">County</span>
+                        <div class="value">@County</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name-cell" style="padding-right: 10px; padding-top: 12px;">
+                        <span class="label">Shift</span>
+                        <div class="value">@Shift</div>
+                    </td>
+                    <td class="name-cell" style="padding-left: 10px; padding-top: 12px;">
+                        <span class="label">Status</span>
+                        <div class="value">@Status</div>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Personal Details</h2>
 
             <table class="name-table">
                 <tr>
@@ -145,15 +181,14 @@
                 <div class="value">@((MarkupString)CombinedAddressHtml)</div>
             </div>
 
-            <div class="field-group">
-                <span class="label">Position Desired</span>
-                <div class="value">@PositionDesired</div>
-            </div>
 
-            <div class="field-group">
-                <span class="label">Comments</span>
-                <div class="value">@Comments</div>
-            </div>
+            @if (!string.IsNullOrWhiteSpace(Comments))
+            {
+                <div class="field-group">
+                    <span class="label">Comments</span>
+                    <div class="value">@Comments</div>
+                </div>
+            }
 
             <a href="mailto:@Email" class="btn" style="color: #ffffff">Reply to Application</a>
         </div>
@@ -178,34 +213,38 @@
     [Parameter] public string ZipCode { get; set; } = string.Empty;
     [Parameter] public string PositionDesired { get; set; } = string.Empty;
     [Parameter] public string Comments { get; set; } = string.Empty;
+    [Parameter] public string PayRate { get; set; } = string.Empty;
+    [Parameter] public string County { get; set; } = string.Empty;
+    [Parameter] public string Shift { get; set; } = string.Empty;
+    [Parameter] public string Status { get; set; } = string.Empty;
 
     private string CombinedAddressHtml
     {
         get
         {
             var street = string.IsNullOrWhiteSpace(Address) ? null : Address.Trim();
-    var city = string.IsNullOrWhiteSpace(City) ? null : City.Trim();
-    var state = string.IsNullOrWhiteSpace(State) ? null : State.Trim();
-    var zip = string.IsNullOrWhiteSpace(ZipCode) ? null : ZipCode.Trim();
+            var city = string.IsNullOrWhiteSpace(City) ? null : City.Trim();
+            var state = string.IsNullOrWhiteSpace(State) ? null : State.Trim();
+            var zip = string.IsNullOrWhiteSpace(ZipCode) ? null : ZipCode.Trim();
 
-    string cityStateZip = null;
+            string cityStateZip = null;
             if (!string.IsNullOrEmpty(city) || !string.IsNullOrEmpty(state) || !string.IsNullOrEmpty(zip))
             {
                 if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state))
                 {
                     cityStateZip = city + ", " + string.Join(" ", new[] { state, zip }.Where(s => !string.IsNullOrEmpty(s)));
-}
+                }
                 else
-{
-    cityStateZip = string.Join(" ", new[] { city, state, zip }.Where(s => !string.IsNullOrEmpty(s)));
+                {
+                    cityStateZip = string.Join(" ", new[] { city, state, zip }.Where(s => !string.IsNullOrEmpty(s)));
                 }
             }
 
             var parts = new List<string>();
-if (!string.IsNullOrEmpty(street)) parts.Add(street);
-if (!string.IsNullOrEmpty(cityStateZip)) parts.Add(cityStateZip);
-
-return parts.Count > 0 ? string.Join("<br/>", parts) : string.Empty;
+            
+            if (!string.IsNullOrEmpty(street)) parts.Add(street);
+            if (!string.IsNullOrEmpty(cityStateZip)) parts.Add(cityStateZip);
+            return parts.Count > 0 ? string.Join("<br/>", parts) : string.Empty;
         }
     }
 }

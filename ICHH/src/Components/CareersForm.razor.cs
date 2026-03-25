@@ -12,6 +12,7 @@ using System;
 using System.Net.Mail;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace ICHH.src.Components;
 
@@ -33,6 +34,19 @@ public partial class CareersForm
     protected bool CaptchaError { get; set; }
     protected bool ShowSuccessModal { get; set; }
     protected bool IsPositionDisabled { get; set; }
+    protected string? ResumeValidationMessage { get; set; }
+
+    protected string MinDateOfBirth =>
+        DateOnly.FromDateTime(DateTime.Today)
+            .AddYears(-80)
+            .AddDays(1)
+            .ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    protected string MaxDateOfBirth =>
+        DateOnly.FromDateTime(DateTime.Today)
+            .AddYears(-18)
+            .ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
     private bool _needsRecaptchaRender;
     private const long MaxResumeSizeBytes = 10 * 1024 * 1024; // 10MB
     private static readonly HashSet<string> AllowedResumeExtensions = new(StringComparer.OrdinalIgnoreCase)
@@ -200,9 +214,19 @@ public partial class CareersForm
         public string Base64 { get; set; } = string.Empty;
     }
 
+    private sealed class AppliedJobDetails
+    {
+        public string PayRate { get; set; } = string.Empty;
+        public string County { get; set; } = string.Empty;
+        public string Shift { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+    }
+
     // Submit Button 
     protected async Task Submit()
     {
+        ResumeValidationMessage = null;
+
         ResumeUploadPayload? resumePayload;
         try
         {
@@ -218,7 +242,9 @@ public partial class CareersForm
         if (resumePayload is null || string.IsNullOrWhiteSpace(resumePayload.FileName) || string.IsNullOrWhiteSpace(resumePayload.Base64))
         {
             IsSuccess = false;
-            StatusMessage = "Please upload your resume before submitting.";
+            ResumeValidationMessage = "Please upload your resume.";
+            StatusMessage = null;
+            StateHasChanged();
             return;
         }
 
@@ -259,6 +285,21 @@ public partial class CareersForm
             var fromName = Configuration["Smtp:FromName"]!;
             var toAddress = Configuration["Smtp:ToAddress"]!;
 
+            AppliedJobDetails? appliedJob = null;
+
+            try
+            {
+                appliedJob = await JS.InvokeAsync<AppliedJobDetails?>("getAppliedJobDetailsFromQuery");
+            }
+            catch (JSException jsEx)
+            {
+                Console.WriteLine($"[JOB DETAILS JS ERROR] {jsEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[JOB DETAILS ERROR] {ex.Message}");
+            }
+
             using var htmlRenderer = new HtmlRenderer(ServiceProvider, LoggerFactory);
             var htmlBody = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
             {
@@ -276,6 +317,10 @@ public partial class CareersForm
                         { nameof(CareersEmailTemplate.ZipCode), FormInput.ZipCode },
                         { nameof(CareersEmailTemplate.PositionDesired), FormInput.PositionDesired },
                         { nameof(CareersEmailTemplate.Comments), FormInput.Comments },
+                        { nameof(CareersEmailTemplate.PayRate), appliedJob?.PayRate ?? string.Empty },
+                        { nameof(CareersEmailTemplate.County), appliedJob?.County ?? string.Empty },
+                        { nameof(CareersEmailTemplate.Shift), appliedJob?.Shift ?? string.Empty },
+                        { nameof(CareersEmailTemplate.Status), appliedJob?.Status ?? string.Empty },
                     }));
                 return output.ToHtmlString();
             });
@@ -335,6 +380,7 @@ public partial class CareersForm
 
             IsSuccess = true;
             ShowSuccessModal = true;
+            ResumeValidationMessage = null;
             FormInput = new CareersFormInput();
             _needsRecaptchaRender = true;
             await JS.InvokeVoidAsync("resetCaptcha");
@@ -474,18 +520,48 @@ public partial class CareersForm
         }
     }
 
-    /// Result of phone number validation
     public class PhoneValidationResult
     {
         public bool IsValid { get; set; }
         public string Message { get; set; } = string.Empty;
     }
 
-    /// Result of ZIP code validation
     public class ZipValidationResult
     {
         public bool IsValid { get; set; }
         public string Message { get; set; } = string.Empty;
+    }
+
+    public class ValidDateOfBirthAttribute : ValidationAttribute
+    {
+        private const int MinimumAge = 18;
+        private const int MaximumAgeExclusive = 60;
+
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        {
+            if (value is null)
+                return ValidationResult.Success;
+
+            if (value is not DateOnly dateOfBirth)
+                return new ValidationResult("Invalid date of birth.");
+
+            var today = DateOnly.FromDateTime(DateTime.Today);
+
+            if (dateOfBirth >= today)
+                return new ValidationResult("Date of birth cannot be today or in the future.");
+
+            var age = today.Year - dateOfBirth.Year;
+            if (dateOfBirth.AddYears(age) > today)
+                age--;
+
+            if (age < MinimumAge)
+                return new ValidationResult($"You must be at least {MinimumAge} years old.");
+
+            if (age >= MaximumAgeExclusive)
+                return new ValidationResult($"You must be under {MaximumAgeExclusive} years old.");
+
+            return ValidationResult.Success;
+        }
     }
 
     public class CareersFormInput
@@ -502,6 +578,7 @@ public partial class CareersForm
 
         // Date of Birth
         [Required(ErrorMessage = "Date of birth is required")]
+        [ValidDateOfBirth]
         public DateOnly? DateOfBirth { get; set; }
 
         // Email
@@ -530,7 +607,8 @@ public partial class CareersForm
 
         // Zip Code
         [Required(ErrorMessage = "Zip code is required")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Please enter a valid ZIP Code in 12345 or 12345-6789 format.")]
+        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Please enter a valid ZIP Code " +
+            "in 12345 or 12345-6789 format.")]
         public string ZipCode { get; set; } = string.Empty;
 
         // Position Desired
